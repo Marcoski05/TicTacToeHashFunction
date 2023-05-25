@@ -19,6 +19,7 @@ public class TicTacToeHashCode extends Board {
 			testBoard.setBoardString(sc.nextLine());
 			winners[testBoard.myHashCode()] = true;
 		}
+		sc.close();
 	}
 
 	// TODO - write the myHashCode function. It must create a unique hashcode for
@@ -46,13 +47,13 @@ public class TicTacToeHashCode extends Board {
 	}
 
 	public boolean isWin() {
-		return false;
+		return winners[myHashCode()];
 	}
 
 	public boolean isWin(String s) {
-		// return the value in the winner array for the hash code of the board string
-		// sent in.
-		return true;
+		Board testBoard = new TicTacToeHashCode("temp");
+		testBoard.setBoardString(s);
+		return winners[testBoard.myHashCode()];
 	}
 
 	public static void main(String[] args) throws InterruptedException {
