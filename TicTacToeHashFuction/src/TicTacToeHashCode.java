@@ -1,12 +1,24 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.util.Scanner;
+
 //TODO Make sure you remove all of the TODO comments from this file before turning it in
 
 public class TicTacToeHashCode extends Board {
 
 	boolean[] winners; // True if the hash string that maps to this index is a winner, false otherwise
 
-	TicTacToeHashCode(String s) {
+	TicTacToeHashCode(String s) throws FileNotFoundException {
 		super(s);
 		// TODO Instantiate/fill winners array.
+		winners = new boolean[(int) Math.pow(9, 3)];
+		File file = new File("TicTacToeWinners.txt");
+		Scanner sc = new Scanner(file);
+		while (sc.hasNextLine()) {
+			Board testBoard = new TicTacToeHashCode("temp");
+			testBoard.setBoardString(sc.nextLine());
+			winners[testBoard.myHashCode()] = true;
+		}
 	}
 
 	// TODO - write the myHashCode function. It must create a unique hashcode for
