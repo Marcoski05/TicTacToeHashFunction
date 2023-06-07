@@ -2,22 +2,29 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.util.Scanner;
 
-//TODO Make sure you remove all of the TODO comments from this file before turning it in
-
+/**
+ * @author Marco Cecchi-Rivas
+ * creates a hashCode for every possible tictactoe board and can check if it is a winner
+ */
 public class TicTacToeHashCode extends Board {
 
+	/**
+	 * boolean array that holds True if the hash string that maps to this index is a winner, false otherwise
+	 */
 	boolean[] winners; // True if the hash string that maps to this index is a winner, false otherwise
 
+	/**
+	 * @param s title of frame
+	 * creates the tictactoe board and fills the winners array with all winning boards
+	 */
 	TicTacToeHashCode(String s) {
 		super(s);
-		// TODO Instantiate/fill winners array.
 		winners = new boolean[(int) Math.pow(3, 9)];
 		File file = new File("TicTacToeWinners.txt");
 		Scanner sc;
 		try { 
 			sc = new Scanner(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("File \"TicTacToeWinners.txt\" not in working directory");
 			return;
@@ -28,10 +35,11 @@ public class TicTacToeHashCode extends Board {
 		sc.close();
 	}
 
-	// TODO - write the myHashCode function. It must create a unique hashcode for
-	// all of the
-	// possible values the game board (3 ^ 9) and it MUST use the super.charAt(row,
-	// col) function
+
+	/**
+	 * @return integer hashCode value
+	 * generates the hashCode value from the current board, with a single integer for each possible board combination
+	 */
 	@Override
 	public int myHashCode() {
 		int placeValue = 0;
@@ -52,6 +60,11 @@ public class TicTacToeHashCode extends Board {
 		return code;
 	}
 
+	/**
+	 * @param s the string that the hashCode is generated from
+	 * @return the hashcode for the given string
+	 * generates the hashcode value from the given String,  with a single integer for each possible board/String combination
+	 */
 	public int hashCode(String s) {
 		int placeValue = 0;
 		int code = 0;
@@ -71,14 +84,28 @@ public class TicTacToeHashCode extends Board {
 		return code;
 	}
 
+	/**
+	 * @return if the current board is a win
+	 * returns if the current board is a win by checking it in the winners array
+	 */
 	public boolean isWin() {
 		return winners[myHashCode()];
 	}
 
+	/**
+	 * @param s the String that will be checked
+	 * @return if the String is a win by checking it in the winners array
+	 * returns whether or not the String represents a winning combination in the winners array
+	 */
 	public boolean isWin(String s) {
 		return winners[hashCode(s)];
 	}
 
+	/**
+	 * @param args unused
+	 * @throws InterruptedException for the Thread.sleep() call
+	 * tests many tictactoe board combinations from the TTT_Tests.txt file
+	 */
 	public static void main(String[] args) throws InterruptedException {
 		TicTacToeHashCode board = new TicTacToeHashCode("Tic Tac Toe");
 		String s = "";
@@ -88,7 +115,6 @@ public class TicTacToeHashCode extends Board {
 		try {
 			sc = new Scanner(file);
 		} catch (FileNotFoundException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 			System.out.println("File \"TTT_Tests.txt\" not in working directory");
 			return;
@@ -102,7 +128,6 @@ public class TicTacToeHashCode extends Board {
 			// board.setHashCode(board.myHashCode());
 			board.show(s);
 			board.setHashCodeLabel(board.myHashCode());
-			// TODO Update this line to call your isWin method.
 			board.setWinner(board.isWin(s));
 			// TicTacToe ttt = new TicTacToe();
 			// System.out.println(ttt.isWin(s));

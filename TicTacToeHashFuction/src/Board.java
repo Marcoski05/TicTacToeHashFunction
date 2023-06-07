@@ -9,27 +9,59 @@ import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.BoxLayout;
 
+/**
+ * @author Terri Kelly
+ * handles the graphics of the tictactoe board and allows for its manipulation
+ */
 abstract class Board extends JFrame implements ActionListener {
 
+	/**
+	 * each position on the tictactoe board
+	 */
 	private JButton buttons[][];
+	/**
+	 * the hashCode value of the current board
+	 */
 	private JLabel lblHashCode;
+	/**
+	 * whether the current board is a win or loss
+	 */
 	private JLabel lblWinTitle;
 
+	/**
+	 * The String that represents the board
+	 */
 	private String boardString = "";
 
+	/**
+	 * @param title the title of the frame
+	 * creates and sets up the JFrame
+	 */
 	public Board(String title) {
 		super(title);
 		setupFrame();
 	}
 
-	// TODO renamed from setHashCode to setHashCodeLabel
+	/**
+	 * @param hashcode the hashcode to be updated
+	 * updates the hashcode display text to what is given
+	 */
 	public void setHashCodeLabel(int hashcode) {
 		lblHashCode.setText("" + hashcode);
 	}
 
+	/**
+	 * @param result the win text to be updated
+	 * updates the win display text to what is given
+	 */
 	public void setWinner(String result) {
 		lblWinTitle.setText(result);
 	}
+	
+	/**
+	 * @param result whether the win text should be set to win or loss
+	 * updates the win display text based on the given boolean
+	 */
 	public void setWinner(boolean result) {
 		if (result)
 			setWinner("Winner");
@@ -40,6 +72,10 @@ abstract class Board extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) { }
 
+	/**
+	 * @return the newly set up panel
+	 * sets up the top panel which includes the display text
+	 */
 	JPanel setupPanelOne() {
 		JPanel panel = new JPanel();
 		JLabel lblHCTitle = new JLabel("Hash Code");;
@@ -53,6 +89,10 @@ abstract class Board extends JFrame implements ActionListener {
 		return panel;
 	}
 
+	/**
+	 * @return the newly set up inner panel
+	 * sets up the bottom panel which holds the buttons of the board
+	 */
 	private JPanel setupPanelTwo() {
 		JButton b;
 		JPanel panel = new JPanel();
@@ -83,6 +123,11 @@ abstract class Board extends JFrame implements ActionListener {
 		return panel;
 	}
 
+	/**
+	 * @param ch the current char
+	 * @return the next char in the cycle
+	 * returns the next character to show in the button cycle
+	 */
 	private static char cycleValue(char ch) {
 		switch (ch) {
 		case 'x' : 
@@ -94,6 +139,9 @@ abstract class Board extends JFrame implements ActionListener {
 		}
 	}
 
+	/**
+	 * sets up the overall JFrame
+	 */
 	private void setupFrame() {
 		JPanel panel2 = new JPanel();
 
@@ -111,6 +159,10 @@ abstract class Board extends JFrame implements ActionListener {
 		super.setVisible(true);  
 	}
 
+	/**
+	 * @return a random possible tictactoe char
+	 * returns a random choice of the three possible tictactoe characters
+	 */
 	private char randomXO() {
 		int rnd = (int) (Math.random()*TicTacToe.CHAR_POSSIBILITIES);
 		switch(rnd) {
@@ -124,6 +176,12 @@ abstract class Board extends JFrame implements ActionListener {
 	}
 	abstract int myHashCode();
 
+	/**
+	 * @param row the row to be searched
+	 * @param col the col to be searched
+	 * @return the char at the given location
+	 * returns the character at the given spot on the board
+	 */
 	public char charAt(int row, int col) {
 		String value = buttons[row][col].getText();
 		if (value.length() > 0)
@@ -132,6 +190,10 @@ abstract class Board extends JFrame implements ActionListener {
 			return '*';
 	}
 
+	/**
+	 * @param s the new String/board to be displayed
+	 * changes the board being displayed to the given String
+	 */
 	public void show(String s) {
 		int pos = 0;
 		String letter;
@@ -139,11 +201,17 @@ abstract class Board extends JFrame implements ActionListener {
 			for (int c = 0; c < TicTacToe.COLS; c++){
 				char ch = s.charAt(pos);
 				switch (ch) {
-				case '1' : letter = "x"; 
+				case '1' :
+				case 'x' :
+					letter = "x"; 
 				break;
-				case '2' : letter = "o"; 
+				case '2' : 
+				case 'o' :
+					letter = "o"; 
 				break;
-				case '0'  : letter = " "; 
+				case '0'  : 
+				case ' ' :
+					letter = " "; 
 				break;
 				default : letter = "" + ch;                                                                                                                                                                                                                                                                                        xx: letter = " ";
 				}
@@ -152,6 +220,9 @@ abstract class Board extends JFrame implements ActionListener {
 				pos++;
 			}
 	}
+	/**
+	 * resets the BoardString to what is beig shown on the board
+	 */
 	public void resetBoardString() {
 		for (int r = 0; r < TicTacToe.ROWS; r++)
 			for (int c = 0; c < TicTacToe.COLS; c++){
@@ -159,6 +230,10 @@ abstract class Board extends JFrame implements ActionListener {
 			}
 	}
 
+	/**
+	 * @param s new String
+	 * sets the BoardString to the given String
+	 */
 	public void setBoardString(String s) {
 		boardString = s;
 		show(s);
